@@ -10,7 +10,7 @@ export default new Router({
       name: 'home',
       components: {
         default: Home,
-        a: () => import( './views/About.vue')
+        view_tow: () => import( './views/About.vue')
       }
     },
     {
@@ -21,7 +21,15 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       components: {
         default: () => import( /* webpackChunkName: "about" */ './views/About.vue'),
-        a: Home
+        view_tow: Home
+      }
+    },
+    {
+      path: '/grid',
+      name: 'grid',
+      components: {
+        default: () => import('./components/NestedGrid.vue'),
+        view_tow: () => import('./components/UniqueLayouts.vue'),
       }
     }
   ]

@@ -50,18 +50,23 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <v-content>
+
+    <v-content >
       <v-container fluid>
-        <v-layout align-center justify-center>
+        <v-layout align-center column >
+
           <router-view></router-view>
-          <router-view name="a"></router-view>
+          <router-view name="view_tow"></router-view>
+          
         </v-layout>
       </v-container>
     </v-content>
+    
     <v-footer :inset="footer.inset" app>
       <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
 
+    <!--对话框  -->
     <v-dialog v-model="dialog" max-width="500" scrollable lazy>
       <v-card>
         <v-toolbar flat dense color="blue">
@@ -112,7 +117,8 @@ export default {
   data: () => ({
     items: [
       { title: "Home", icon: "fa-home", to: "/" },
-      { title: "About", icon: "fa-address-card", to: "/about" }
+      { title: "About", icon: "fa-address-card", to: "/about" },
+      { title: "Grid", icon: "fa-th-large", to: "/grid" }
     ],
     dialog: false,
     dark: false,
