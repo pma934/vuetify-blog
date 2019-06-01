@@ -1,5 +1,6 @@
 <template>
   <v-app id="sandbox" :dark="dark">
+    <!-- 抽屉 -->
     <v-navigation-drawer
       v-model="primaryDrawer.model"
       :permanent="primaryDrawer.type === 'permanent'"
@@ -7,18 +8,14 @@
       :clipped="primaryDrawer.clipped"
       :floating="primaryDrawer.floating"
       :mini-variant="primaryDrawer.mini"
-      absolute
-      overflow
+      width="200"
+      fixed
       app
     >
-          <v-list-tile>
-            <v-list-tile-title class="title">导航</v-list-tile-title>
-          </v-list-tile>
-
-      
-
+      <v-list-tile>
+        <v-list-tile-title class="title">导航</v-list-tile-title>
+      </v-list-tile>
       <v-list dense class="pt-0">
-
         <v-list-tile v-for="item in items" :key="item.title" :to="item.to">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -27,13 +24,19 @@
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-
       </v-list>
-
-
     </v-navigation-drawer>
 
-    <v-toolbar :clipped-left="primaryDrawer.clipped" app absolute>
+    <!-- 顶部工具栏 -->
+    <v-toolbar
+      :clipped-left="primaryDrawer.clipped"
+      :absolute="!primaryDrawer.clipped"
+      :flat="primaryDrawer.clipped"
+      dense
+      fixed
+      app
+      scroll-off-screen
+    >
       <v-toolbar-side-icon
         v-if="primaryDrawer.type !== 'permanent'"
         @click.stop="primaryDrawer.model = !primaryDrawer.model"
@@ -46,13 +49,12 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
+
     <v-content>
       <v-container fluid>
         <v-layout align-center justify-center>
-
-        <router-view></router-view>  
-        <router-view name="a"></router-view>  
-
+          <router-view></router-view>
+          <router-view name="a"></router-view>
         </v-layout>
       </v-container>
     </v-content>
@@ -60,8 +62,14 @@
       <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
 
-    <v-dialog v-model="dialog" max-width="500">
+    <v-dialog v-model="dialog" max-width="500" scrollable lazy>
       <v-card>
+        <v-toolbar flat dense color="blue">
+          title
+          <v-progress-linear indeterminate color="red">
+            
+          </v-progress-linear>
+        </v-toolbar>
         <v-card-text>
           <v-layout row wrap>
             <v-flex xs12 md6>
@@ -91,7 +99,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat>Cancel</v-btn>
+          <v-btn flat @click="dialog=false">Cancel</v-btn>
           <v-btn flat color="primary">Submit</v-btn>
         </v-card-actions>
       </v-card>
@@ -103,14 +111,14 @@
 export default {
   data: () => ({
     items: [
-      { title: "Home", icon: "fa-home" ,to:"/"},
-      { title: "About", icon: "fa-address-card",to:"/about" }
+      { title: "Home", icon: "fa-home", to: "/" },
+      { title: "About", icon: "fa-address-card", to: "/about" }
     ],
     dialog: false,
     dark: false,
     drawers: ["Default (no property)", "Permanent", "Temporary"],
     primaryDrawer: {
-      model: true,
+      model: null,
       type: "default (no property)",
       clipped: false,
       floating: false,
