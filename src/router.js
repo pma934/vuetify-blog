@@ -31,6 +31,14 @@ export default new Router({
         default: () => import('./components/NestedGrid.vue'),
         view_tow: () => import('./components/UniqueLayouts.vue'),
       }
+    },
+    {
+      path: '/theme',
+      name: 'theme',
+      components: {
+        default: () => import('./components/Theme.vue'),
+        view_tow: null,
+      }
     }
   ]
 })

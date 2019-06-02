@@ -1,5 +1,7 @@
 <template>
+<v-container fluid grid-list-sm>
   <HelloWorld />
+  </v-container>
 </template>
 
 <script>

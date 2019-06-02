@@ -8,9 +8,10 @@
       :clipped="primaryDrawer.clipped"
       :floating="primaryDrawer.floating"
       :mini-variant="primaryDrawer.mini"
-      width="200"
+      width="240"
       fixed
       app
+      style="overflow: hidden;"
     >
       <v-list-tile>
         <v-list-tile-title class="title">导航</v-list-tile-title>
@@ -25,23 +26,30 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+      <v-list class="pt-0 pl-4 pr-4" :v-show="primaryDrawer.mini">
+        <canvas id="canvasTime" style="width:100%"></canvas>
+      </v-list>
+      <v-sheet class="pd-0 pt-0" :v-show="primaryDrawer.mini">
+        <live2d style="position: fixed;right: -50px;bottom: 0px;z-index:-1" class="hidden-sm-and-down"
+        ></live2d>
+      </v-sheet>
     </v-navigation-drawer>
 
     <!-- 顶部工具栏 -->
     <v-toolbar
       :clipped-left="primaryDrawer.clipped"
+      :scroll-off-screen="!primaryDrawer.clipped"
       :absolute="!primaryDrawer.clipped"
       :flat="primaryDrawer.clipped"
       dense
       fixed
       app
-      scroll-off-screen
     >
       <v-toolbar-side-icon
         v-if="primaryDrawer.type !== 'permanent'"
         @click.stop="primaryDrawer.model = !primaryDrawer.model"
       ></v-toolbar-side-icon>
-      <v-toolbar-title>Vuetify</v-toolbar-title>
+      <v-toolbar-title>围巾落地冻成狗</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn icon @click.stop="dialog=!dialog">
@@ -50,18 +58,15 @@
       </v-toolbar-items>
     </v-toolbar>
 
-
-    <v-content >
+    <v-content>
       <v-container fluid>
-        <v-layout align-center column >
-
+        <v-layout align-center column>
           <router-view></router-view>
           <router-view name="view_tow"></router-view>
-          
         </v-layout>
       </v-container>
     </v-content>
-    
+
     <v-footer :inset="footer.inset" app>
       <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -71,9 +76,7 @@
       <v-card>
         <v-toolbar flat dense color="blue">
           title
-          <v-progress-linear indeterminate color="red">
-            
-          </v-progress-linear>
+          <v-progress-linear indeterminate color="red"></v-progress-linear>
         </v-toolbar>
         <v-card-text>
           <v-layout row wrap>
@@ -113,12 +116,17 @@
 </template>
 
 <script>
+import canvasTime from "@/assets/javascript/canvasTime.js";
+import Live2D from "./components/Live2D";
+
 export default {
   data: () => ({
     items: [
       { title: "Home", icon: "fa-home", to: "/" },
       { title: "About", icon: "fa-address-card", to: "/about" },
-      { title: "Grid", icon: "fa-th-large", to: "/grid" }
+      { title: "Grid", icon: "fa-th-large", to: "/grid" },
+      { title: "Theme", icon: "fa-check-circle", to: "/theme" },
+      { title: "Theme", icon: "fa-check-circle", to: "/theme" },
     ],
     dialog: false,
     dark: false,
@@ -132,8 +140,28 @@ export default {
     },
     footer: {
       inset: false
-    }
+    },
+    canvasTimeCallBack: null
   }),
-  computed: {}
+  computed: {
+    clockColor() {
+      return this.$vuetify.theme.primary;
+    }
+  },
+  watch: {
+    clockColor: function() {
+      this.canvasTimeCallBack = canvasTime(
+        "canvasTime",
+        this.clockColor,
+        this.canvasTimeCallBack
+      );
+    }
+  },
+  components: {
+    live2d: Live2D
+  },
+  mounted() {
+    this.canvasTimeCallBack = canvasTime("canvasTime", this.clockColor);
+  }
 };
 </script>
