@@ -126,7 +126,7 @@ export default {
       { title: "About", icon: "fa-address-card", to: "/about" },
       { title: "Grid", icon: "fa-th-large", to: "/grid" },
       { title: "Theme", icon: "fa-check-circle", to: "/theme" },
-      { title: "Theme", icon: "fa-check-circle", to: "/theme" },
+      { title: "CodePen", icon: "fa-check-circle", to: "/codePen" },
     ],
     dialog: false,
     dark: false,

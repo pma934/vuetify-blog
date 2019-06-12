@@ -65,6 +65,8 @@ export default {
           return "600px";
         case "xl":
           return "800px";
+        default:
+          return "未知";
       }
     }
   },

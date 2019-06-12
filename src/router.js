@@ -39,6 +39,14 @@ export default new Router({
         default: () => import('./components/Theme.vue'),
         view_tow: null,
       }
+    },
+    {
+      path: '/codePen',
+      name: 'codePen',
+      components: {
+        default: () => import('./components/CodePen.vue'),
+        view_tow: null,
+      }
     }
   ]
 })
