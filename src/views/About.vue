@@ -1,31 +1,38 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <p>{{msg}}</p>
+    <p>{{imageHeight}}</p>
+    <Bilibili/>
   </div>
 </template>
 
 <script>
-let Parser = require("rss-parser");
-let parser = new Parser();
+import Bilibili from "@/components/Bilibili";
 
 export default {
-  data(){
-    return{
-      msg:'msg'
+  data() {
+    return {};
+  },
+  computed: {
+    imageHeight() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return "xs";
+        case "sm":
+          return "sm";
+        case "md":
+          return "md";
+        case "lg":
+          return "lg";
+        case "xl":
+          return "xl";
+      }
     }
   },
-  mounted() {
-    (async () => {
-      let feed = await parser.parseURL("https://codepen.io/popular/feed");
-      this.msg = feed.title
-      console.log(feed.title);
-
-      feed.items.forEach(item => {
-        console.log(item.title + ":" + item.link);
-      });
-    })();
-  }
+  components: {
+    Bilibili
+  },
+  mounted() {}
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
-  <div >
-    <div>{{res}}</div>
+  <div v-if="codePenItems.length">
+    <!-- <div>{{res}}</div> -->
     <div class="headline">{{title||'CodePen Popular Pens'}}</div>
     <v-container grid-list-lg>
       <v-layout column>
@@ -52,8 +52,8 @@ export default {
     return {
       codePenItems: [],
       show: 1,
-      panel: 0,
-      res:'no',
+      panel: 0
+      // res:'no',
     };
   },
   computed: {
@@ -81,31 +81,31 @@ export default {
   created() {
     this.$axios({
       method: "get",
-      url: this.url || "http://www.coolan.win:3333/mockapi/people/1", //"https://codepen.io/pma934/public/feed"
+      url: this.url || "https://codepen.io/popular/feed" //"https://codepen.io/pma934/public/feed"
     }).then(
       res => {
-        this.res = res
-        // let xmlhttp = res.request.responseXML.querySelectorAll("item");
-        // for (let i = 0, len = xmlhttp.length; i < len; i++) {
-        //   let title = xmlhttp[i]
-        //     .querySelector("title")
-        //     .innerHTML.replace(/&lt;/g, "<")
-        //     .replace(/&gt;/g, ">")
-        //     .replace(/&amp;/g, "&");
-        //   let link = xmlhttp[i].querySelector("link").innerHTML.split("/")[5];
-        //   this.codePenItems.push({
-        //     title: title,
-        //     url: `https://codepen.io/oknoblich/pen/${link}/image/large.png`,
-        //     lazy: `https://codepen.io/oknoblich/pen/${link}/image/large.png`,
-        //     full: xmlhttp[i]
-        //       .querySelector("link")
-        //       .innerHTML.replace(/\/pen\//, "/full/"),
-        //     pen: xmlhttp[i].querySelector("link").innerHTML
-        //   });
-        // }
+        // this.res = res
+        let xmlhttp = res.request.responseXML.querySelectorAll("item");
+        for (let i = 0, len = xmlhttp.length; i < len; i++) {
+          let title = xmlhttp[i]
+            .querySelector("title")
+            .innerHTML.replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&amp;/g, "&");
+          let link = xmlhttp[i].querySelector("link").innerHTML.split("/")[5];
+          this.codePenItems.push({
+            title: title,
+            url: `https://codepen.io/oknoblich/pen/${link}/image/large.png`,
+            lazy: `https://codepen.io/oknoblich/pen/${link}/image/large.png`,
+            full: xmlhttp[i]
+              .querySelector("link")
+              .innerHTML.replace(/\/pen\//, "/full/"),
+            pen: xmlhttp[i].querySelector("link").innerHTML
+          });
+        }
       },
       err => {
-        this.res = err
+        // this.res = err
         //console.log("1:" + err);
       }
     );
