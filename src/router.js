@@ -10,7 +10,7 @@ export default new Router({
       name: 'home',
       components: {
         default: Home,
-        view_tow: () => import( './views/About.vue')
+        // view_tow: () => import( './views/About.vue')
       }
     },
     {
@@ -21,7 +21,7 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       components: {
         default: () => import( /* webpackChunkName: "about" */ './views/About.vue'),
-        view_tow: Home
+        // view_tow: Home
       }
     },
     {
@@ -29,7 +29,7 @@ export default new Router({
       name: 'grid',
       components: {
         default: () => import('./components/NestedGrid.vue'),
-        view_tow: () => import('./components/UniqueLayouts.vue'),
+        // view_tow: () => import('./components/UniqueLayouts.vue'),
       }
     },
     {
@@ -37,7 +37,7 @@ export default new Router({
       name: 'theme',
       components: {
         default: () => import('./components/Theme.vue'),
-        view_tow: null,
+        // view_tow: null,
       }
     },
     {
@@ -45,7 +45,7 @@ export default new Router({
       name: 'codePen',
       components: {
         default: () => import('./components/CodePen.vue'),
-        view_tow: null,
+        // view_tow: null,
       }
     }
   ]

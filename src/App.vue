@@ -26,11 +26,13 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-      <v-list class="pt-0 pl-4 pr-4" :v-show="primaryDrawer.mini">
+      <v-list class="pt-0 pl-4 pr-4" v-show="!primaryDrawer.mini">
         <canvas id="canvasTime" style="width:100%"></canvas>
       </v-list>
-      <v-sheet class="pd-0 pt-0" :v-show="primaryDrawer.mini">
-        <live2d style="position: fixed;right: -50px;bottom: 0px;z-index:-1" class="hidden-sm-and-down"
+      <v-sheet class="pd-0 pt-0" v-show="!primaryDrawer.mini">
+        <live2d
+          style="position: fixed;right: -50px;bottom: 0px;z-index:-1"
+          class="hidden-sm-and-down"
         ></live2d>
       </v-sheet>
     </v-navigation-drawer>
@@ -57,16 +59,16 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-
+    <!-- 内容 -->
     <v-content>
       <v-container fluid>
         <v-layout align-center column>
           <router-view></router-view>
-          <router-view name="view_tow"></router-view>
+          <!-- <router-view name="view_tow"></router-view> -->
         </v-layout>
       </v-container>
     </v-content>
-
+    <!-- 页脚 -->
     <v-footer :inset="footer.inset" app>
       <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -126,7 +128,7 @@ export default {
       { title: "About", icon: "fa-address-card", to: "/about" },
       { title: "Grid", icon: "fa-th-large", to: "/grid" },
       { title: "Theme", icon: "fa-check-circle", to: "/theme" },
-      { title: "CodePen", icon: "fa-check-circle", to: "/codePen" },
+      { title: "CodePen", icon: "fa-check-circle", to: "/codePen" }
     ],
     dialog: false,
     dark: false,
