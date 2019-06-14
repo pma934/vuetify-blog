@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-container>
     <NestedGrid/>
     <UniqueLayouts/>
-  </div>
+  </v-container>
 </template>
 <script>
 import NestedGrid from "@/components/NestedGrid";

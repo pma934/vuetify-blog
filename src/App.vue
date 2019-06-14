@@ -63,7 +63,7 @@
     <v-content>
       <v-container fluid>
         <v-layout align-center column>
-          <router-view></router-view>
+          <router-view style="border:1px solid"></router-view>
         </v-layout>
       </v-container>
     </v-content>
