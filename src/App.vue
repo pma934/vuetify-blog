@@ -30,10 +30,10 @@
         <canvas id="canvasTime" style="width:100%"></canvas>
       </v-list>
       <v-sheet class="pd-0 pt-0" v-show="!primaryDrawer.mini">
-        <live2d
+        <!-- <live2d
           style="position: fixed;right: -50px;bottom: 0px;z-index:-1"
           class="hidden-sm-and-down"
-        ></live2d>
+        ></live2d> -->
       </v-sheet>
     </v-navigation-drawer>
 
