@@ -1,7 +1,7 @@
 <template>
   <div v-if="codePenItems.length">
     <!-- <div>{{res}}</div> -->
-    <div class="headline">{{title}}</div>
+    <div class="headline">{{title||'CodePen Popular Pens'}}</div>
     <v-container grid-list-lg>
       <v-layout column>
         <v-layout wrap>
@@ -47,11 +47,13 @@ export default {
   props: {
     title: String,
     url: String
-  },
+  }, //name:type
   data() {
     return {
       codePenItems: [],
-      show: 1
+      show: 1,
+      panel: 0
+      // res:'no',
     };
   },
   computed: {
@@ -74,54 +76,72 @@ export default {
     }
   }, //计算属性
   watch: {},
-  methods: {
-    getCodePenItems() {
-      if (this.$store.state.codePen.hasOwnProperty(this.url)) {
-        this.codePenItems = this.$store.state.codePen[this.url];
-      } else {
-        this.getCodePenItemsByAxios();
-      }
-    },
-    getCodePenItemsByAxios() {
-      this.$axios({
-        method: "get",
-        url: this.url
-      }).then(
-        res => {
-          this.getDataFromXml(res.request.responseXML);
-          this.$store.state.codePen[this.url] = this.codePenItems;
-        },
-        err => {
-          this.$store.state.codePen[this.url] = this.codePenItems;
-        }
-      );
-    },
-    getDataFromXml(XML) {
-      let xmlhttp = XML.querySelectorAll("item");
-      for (let i = 0, len = xmlhttp.length; i < len; i++) {
-        let title = xmlhttp[i]
-          .querySelector("title")
-          .innerHTML.replace(/&lt;/g, "<")
-          .replace(/&gt;/g, ">")
-          .replace(/&amp;/g, "&");
-        let link = xmlhttp[i].querySelector("link").innerHTML.split("/")[5];
-        this.codePenItems.push({
-          title: title,
-          url: `https://codepen.io/oknoblich/pen/${link}/image/large.png`,
-          lazy: `https://codepen.io/oknoblich/pen/${link}/image/large.png`,
-          full: xmlhttp[i]
-            .querySelector("link")
-            .innerHTML.replace(/\/pen\//, "/full/"),
-          pen: xmlhttp[i].querySelector("link").innerHTML
-        });
-      }
-    }
-  },
+  methods: {},
   components: {}, //组件componentsName:name
   created() {
-    this.getCodePenItems()
+    this.$axios({
+      method: "get",
+      url: this.url || "https://codepen.io/popular/feed" //"https://codepen.io/pma934/public/feed"
+    }).then(
+      res => {
+        // this.res = res
+        let xmlhttp = res.request.responseXML.querySelectorAll("item");
+        for (let i = 0, len = xmlhttp.length; i < len; i++) {
+          let title = xmlhttp[i]
+            .querySelector("title")
+            .innerHTML.replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&amp;/g, "&");
+          let link = xmlhttp[i].querySelector("link").innerHTML.split("/")[5];
+          this.codePenItems.push({
+            title: title,
+            url: `https://codepen.io/oknoblich/pen/${link}/image/large.png`,
+            lazy: `https://codepen.io/oknoblich/pen/${link}/image/large.png`,
+            full: xmlhttp[i]
+              .querySelector("link")
+              .innerHTML.replace(/\/pen\//, "/full/"),
+            pen: xmlhttp[i].querySelector("link").innerHTML
+          });
+        }
+      },
+      err => {
+        // this.res = err
+        //console.log("1:" + err);
+      }
+    );
+    // .catch(err => {
+    //   console.log("2:" + err);
+    // });
+
+    // console.log(this.codePenItems);
+    // console.log(document.querySelector(".v-content").outerHTML)
+    // let iterator = document.createNodeIterator(
+    //   document.querySelector(".v-content"),
+    //   NodeFilter.SHOW_ALL,
+    //   null,
+    //   false
+    // );
+    // let node = iterator.nextNode();
+    // while (node !== null) {
+    //   console.log(node.outerHTML);
+    //   node = iterator.nextNode();
+    // }
   },
-  mounted() {}
+  mounted() {
+    // console.log(this.codePenItems);
+    // console.log(document.querySelector(".v-content").outerHTML)
+    // let iterator = document.createNodeIterator(
+    //   document.querySelector(".v-content"),
+    //   NodeFilter.SHOW_ALL,
+    //   null,
+    //   false
+    // );
+    // let node = iterator.nextNode();
+    // while (node !== null) {
+    //   console.log(node.outerHTML);
+    //   node = iterator.nextNode();
+    // }
+  }
 };
 </script>
 

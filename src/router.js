@@ -8,45 +8,28 @@ export default new Router({
   routes: [{
       path: '/',
       name: 'home',
-      components: {
-        default: Home,
-        // view_tow: () => import( './views/About.vue')
-      }
+      component: Home
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      components: {
-        default: () => import( /* webpackChunkName: "about" */ './views/About.vue'),
-        // view_tow: Home
-      }
+      component: () => import('./views/About.vue'), //  lazy-loaded
     },
     {
       path: '/grid',
       name: 'grid',
-      components: {
-        default: () => import('./components/NestedGrid.vue'),
-        // view_tow: () => import('./components/UniqueLayouts.vue'),
-      }
+      component: () => import('./views/Grid.vue')
+
     },
     {
       path: '/theme',
       name: 'theme',
-      components: {
-        default: () => import('./components/Theme.vue'),
-        // view_tow: null,
-      }
+      component: () => import('./views/Theme.vue')
     },
     {
-      path: '/codePen',
-      name: 'codePen',
-      components: {
-        default: () => import('./components/CodePen.vue'),
-        // view_tow: null,
-      }
+      path: '/other',
+      name: 'other',
+      component: () => import('./views/Other.vue')
     }
   ]
 })

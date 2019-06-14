@@ -2,12 +2,12 @@
   <div class="about">
     <h1>This is an about page</h1>
     <p>{{imageHeight}}</p>
-    <Bilibili/>
+    <WeatherForecast/>
   </div>
 </template>
 
 <script>
-import Bilibili from "@/components/Bilibili";
+import WeatherForecast from "@/components/WeatherForecast";
 
 export default {
   data() {
@@ -30,7 +30,7 @@ export default {
     }
   },
   components: {
-    Bilibili
+    WeatherForecast
   },
   mounted() {}
 };
