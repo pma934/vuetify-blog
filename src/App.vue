@@ -1,5 +1,5 @@
 <template>
-  <v-app id="sandbox" :dark="dark">
+  <v-app id="app" :dark="dark">
     <!-- 抽屉 -->
     <v-navigation-drawer
       v-model="primaryDrawer.model"
@@ -33,7 +33,7 @@
         <!-- <live2d
           style="position: fixed;right: -50px;bottom: 0px;z-index:-1"
           class="hidden-sm-and-down"
-        ></live2d> -->
+        ></live2d>-->
       </v-sheet>
     </v-navigation-drawer>
 
@@ -62,15 +62,17 @@
     <!-- 内容 -->
     <v-content>
       <v-container fluid>
-        <v-layout align-center column>
+        <!-- <v-layout align-center column> -->
+        <keep-alive include="home,archive">   
           <router-view style="border:1px solid"></router-view>
-        </v-layout>
+        </keep-alive>
+        <!-- </v-layout> -->
       </v-container>
     </v-content>
     <!-- 页脚 -->
     <!-- <v-footer :inset="footer.inset" app>
       <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer> -->
+    </v-footer>-->
 
     <!--对话框  -->
     <v-dialog v-model="dialog" max-width="500" scrollable lazy>
@@ -119,15 +121,17 @@
 <script>
 import canvasTime from "@/assets/javascript/canvasTime.js";
 import Live2D from "./components/Live2D";
+import GetBlog from "./plugins/getBlog.js";
 
 export default {
+  name: "app",
   data: () => ({
     items: [
       { title: "Home", icon: "fa-home", to: "/" },
       { title: "About", icon: "fa-address-card", to: "/about" },
       { title: "Grid", icon: "fa-th-large", to: "/grid" },
       { title: "Theme", icon: "fa-check-circle", to: "/theme" },
-      { title: "Other", icon: "fa-check-circle", to: "/other" }
+      { title: "归档", icon: "fa-check-circle", to: "/archive" }
     ],
     dialog: false,
     dark: false,
@@ -160,6 +164,9 @@ export default {
   },
   components: {
     live2d: Live2D
+  },
+  beforeCreate() {
+    GetBlog(this);
   },
   mounted() {
     this.canvasTimeCallBack = canvasTime("canvasTime", this.clockColor);

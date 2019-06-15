@@ -1,16 +1,22 @@
 <template>
-  <v-container fluid grid-list-sm>
+  <!-- <v-container fluid grid-list-sm> -->
+  <div id="home">
     <CodePen title="My Pens" url="https://codepen.io/pma934/public/feed"/>
     <CodePen title="CodePen Popular Pens" url="https://codepen.io/popular/feed"/>
-  </v-container>
+    <Blog/>
+  </div>
+  <!-- </v-container> -->
 </template>
 
 <script>
 import CodePen from "@/components/CodePen";
+import Blog from "@/components/Blog";
 
 export default {
+  name: "home",
   components: {
-    CodePen
+    CodePen,
+    Blog
   }
 };
 </script>

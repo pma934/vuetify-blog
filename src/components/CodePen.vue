@@ -8,9 +8,12 @@
           <v-flex v-for="(codePenItem,index) in showCodePenItems" :key="index" xs12 sm6 md4 lg3>
             <v-card hover class="nopointer">
               <v-card-title class="subheading">
-                <span
-                  style="text-overflow: ellipsis ;white-space: nowrap;overflow: hidden;"
-                >{{codePenItem.title}}</span>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <span class="text-truncate" v-on="on">{{codePenItem.title}}</span>
+                  </template>
+                  <span>{{codePenItem.title}}</span>
+                </v-tooltip>
               </v-card-title>
               <a :href="codePenItem.full" target="_blank">
                 <v-img
@@ -119,7 +122,7 @@ export default {
   },
   components: {}, //组件componentsName:name
   created() {
-    this.getCodePenItems()
+    this.getCodePenItems();
   },
   mounted() {}
 };

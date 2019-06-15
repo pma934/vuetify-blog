@@ -1,6 +1,8 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <p>{{$store.state.blog.length}}</p>
+    <p>{{$store.state.per5Pages}}</p>
     <p>{{imageHeight}}</p>
     <WeatherForecast/>
   </div>
@@ -10,6 +12,7 @@
 import WeatherForecast from "@/components/WeatherForecast";
 
 export default {
+  name:"about",
   data() {
     return {};
   },

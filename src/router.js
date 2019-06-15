@@ -27,9 +27,14 @@ export default new Router({
       component: () => import('./views/Theme.vue')
     },
     {
-      path: '/other',
-      name: 'other',
-      component: () => import('./views/Other.vue')
-    }
+      path: '/archive',
+      name: 'archive',
+      component: () => import('./views/Archive.vue')
+    },
+    {
+      path: "/archive/:number",
+      component: () => import('./components/BlogContent.vue')
+    },
+
   ]
 })

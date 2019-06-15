@@ -1,6 +1,7 @@
 <template>
-  <v-container grid-list-lg>
-    <v-layout  wrap>
+  <div id="archive">
+    123
+    <v-layout wrap column>
       <v-flex>
         <code>Other</code>
       </v-flex>
@@ -8,16 +9,16 @@
         <Blog/>
       </v-flex>
     </v-layout>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import Blog from "@/components/Blog";
 
 export default {
-  name: "Other",
+  name: "archive",
   components: {
-    Blog
+    Blog,
   }
 };
 </script>
