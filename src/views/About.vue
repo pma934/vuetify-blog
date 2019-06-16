@@ -12,7 +12,7 @@
 import WeatherForecast from "@/components/WeatherForecast";
 
 export default {
-  name:"about",
+  name: "about",
   data() {
     return {};
   },
@@ -35,7 +35,8 @@ export default {
   components: {
     WeatherForecast
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 

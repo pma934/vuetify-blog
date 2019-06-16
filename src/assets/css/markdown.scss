@@ -139,12 +139,13 @@
 }
 
 .markdown-body table tr {
-  // background-color: #fff;
+  background-color: #fff;
   border-top: 1px solid #ccc;
 }
 
+.markdown-body table thead tr,
 .markdown-body table tr:nth-child(2n) {
-  // background-color: #f8f8f8;
+  background-color: #f8f8f8;
 }
 
 .markdown-body table th,
@@ -155,19 +156,14 @@
 
 .markdown-body pre {
   word-wrap: normal;
-  padding: 6px;
+  padding-left: 6px;
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  // background-color: #f7f7f7;
+  background-color: #6f1818;
   -webkit-border-radius: 3px;
   border-radius: 3px;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-}
-
-//黑暗主题
-.theme--dark.application  .markdown-body pre{
-  background-color: #f7f7f7;
 }
 
 .markdown-body pre code {
@@ -183,7 +179,6 @@
   border: 0;
   -webkit-border-radius: 3px;
   border-radius: 3px;
-  // background-color: transparent;
   //新加的
   box-shadow: 0 0;
   background-color: transparent;
@@ -197,11 +192,9 @@
 .markdown-body code {
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   padding: 0;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
   margin: 0;
   font-size: 85%;
-  // background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(0, 0, 0, 0.04);
   -webkit-border-radius: 3px;
   border-radius: 3px;
   // 新加的
@@ -271,4 +264,18 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0;
+}
+
+//语法高亮
+.markdown-body pre code ol {
+  margin: 0;
+
+  li {
+    background-color: #333;
+    color: #eee;
+    padding-left: .5em;
+    &:hover{
+      background-color: #666;
+    }
+  }
 }

@@ -18,7 +18,7 @@
         <v-list>
           <v-list-tile avatar>
             <v-list-tile-avatar color="white">
-              <v-img src="https://avatars1.githubusercontent.com/u/44082279?s=460&v=4" height="34"/>
+              <v-img src="https://s2.ax1x.com/2019/06/16/V7QVCn.jpg" height="34"/>
             </v-list-tile-avatar>
             <v-list-tile-title class="title">导航</v-list-tile-title>
           </v-list-tile>
