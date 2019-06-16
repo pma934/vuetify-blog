@@ -12,29 +12,54 @@
       fixed
       app
       style="overflow: hidden;"
+      dark
     >
-      <v-list-tile>
-        <v-list-tile-title class="title">导航</v-list-tile-title>
-      </v-list-tile>
-      <v-list dense class="pt-0">
-        <v-list-tile v-for="item in items" :key="item.title" :to="item.to">
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-      <v-list class="pt-0 pl-4 pr-4" v-show="!primaryDrawer.mini">
+      <v-img
+        src="https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-1.23832d31.jpg"
+        gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+        height="100%"
+      >
+        <v-list>
+          <v-list-tile avatar>
+            <v-list-tile-avatar color="white">
+              <v-img
+                src="https://avatars1.githubusercontent.com/u/44082279?s=460&v=4"
+                height="34"
+                contain
+              />
+            </v-list-tile-avatar>
+            <v-list-tile-title class="title">导航</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+
+        <v-divider class="mx-3"/>
+
+        <v-list class="pt-0">
+          <v-list-tile
+            v-for="item in items"
+            :key="item.title"
+            :to="item.to"
+            class="py-2 px-3 my-v-list-tile"
+          >
+            <v-list-tile-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title class="font-weight-light">{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+
+        <!-- <v-list class="pt-0 pl-4 pr-4" v-show="!primaryDrawer.mini">
         <canvas id="canvasTime" style="width:100%"></canvas>
-      </v-list>
-      <v-sheet class="pd-0 pt-0" v-show="!primaryDrawer.mini">
-        <!-- <live2d
+        </v-list>-->
+        <!-- <v-sheet class="pd-0 pt-0" v-show="!primaryDrawer.mini">
+        <live2d
           style="position: fixed;right: -50px;bottom: 0px;z-index:-1"
           class="hidden-sm-and-down"
-        ></live2d>-->
-      </v-sheet>
+        ></live2d>
+        </v-sheet>-->
+      </v-img>
     </v-navigation-drawer>
 
     <!-- 顶部工具栏 -->
@@ -63,7 +88,7 @@
     <v-content>
       <v-container fluid>
         <!-- <v-layout align-center column> -->
-        <keep-alive include="home,archive">   
+        <keep-alive include="home,archive">
           <router-view style="border:1px solid"></router-view>
         </keep-alive>
         <!-- </v-layout> -->
@@ -169,7 +194,18 @@ export default {
     GetBlog(this);
   },
   mounted() {
-    this.canvasTimeCallBack = canvasTime("canvasTime", this.clockColor);
+    // this.canvasTimeCallBack = canvasTime("canvasTime", this.clockColor);
   }
 };
 </script>
+
+<style scoped>
+.my-v-list-tile >>> .v-list__tile--active {
+  background-color: var(--v-primary-base) !important;
+  border-radius: 4px;
+}
+.my-v-list-tile >>> a {
+  color: inherit !important;
+}
+</style>
+

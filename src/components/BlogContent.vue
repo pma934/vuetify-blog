@@ -1,10 +1,10 @@
 <template>
   <div id="blogContent">
     <v-layout>
-      <v-flex xs12  md10 >
+      <v-flex xs12 md10>
         <div class="markdown-body" id="BlogContent" v-html="data"></div>
       </v-flex>
-      <v-flex xs0  md2 ></v-flex>
+      <v-flex xs0 md2></v-flex>
     </v-layout>
   </div>
 </template>

@@ -6,7 +6,7 @@ export default function (vue) {
 function getBlog(fn, per_page, page = 1) {
     this.$axios
         .get(
-            `https://api.github.com/repos/pma934/pma934.github.io/issues?per_page=${per_page}&page=${page}&access_token=b305775513df41a4782e988b507c9418622dfa36`
+            `https://api.github.com/repos/pma934/pma934.github.io/issues?per_page=${per_page}&page=${page}&access_token=07275ee10186aabe3822e03fc8b2ead92c4b3d83`
         )//vuejs/vue           pma934/pma934.github.io
         .then(
             res => {
@@ -18,7 +18,7 @@ function getBlog(fn, per_page, page = 1) {
 
 function init(res,page) {
     //初始化，先获取5个展示，和设置总页数
-    console.log("init");
+    // console.log("init");
     this.$store.commit("setBlog", [res.data, page]);
     let headers = res.headers;
     if (headers.hasOwnProperty("link")) {
@@ -30,8 +30,8 @@ function init(res,page) {
 
 function getAll(res, page) {
     //获取全部内容
-    console.log("getAll");
-    console.log(page);
+    // console.log("getAll");
+    // console.log(page);
     this.$store.commit("setBlog", [res.data, page]);
     // this.blogs = this.$store.state.blog;
     if (page < this.$store.getters.per100Pages) {

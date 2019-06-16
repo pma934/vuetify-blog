@@ -19,7 +19,7 @@ export default new Vuex.Store({
       state.per5Pages = n
     },
     setBlog(state, [list, page]) {
-      console.log(page)
+      // console.log(page)
       if (page == 1) {
         
         state.blog = list
