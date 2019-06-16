@@ -30,6 +30,9 @@ export default {
     }
   },
   components: {},
+  beforeCreate(){
+    
+  },
   created: function() {
     this.blog = this.getBlog(this.$route.params.number);
     this.data = this.$marked(this.blog.body);

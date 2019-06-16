@@ -33,8 +33,11 @@ export default new Router({
     },
     {
       path: "/archive/:number",
+      name: "blogContent",
       component: () => import('./components/BlogContent.vue')
-    },
-
-  ]
+    }
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })

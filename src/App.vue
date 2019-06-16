@@ -1,32 +1,24 @@
 <template>
-  <v-app id="app" :dark="dark">
+  <v-app id="app">
     <!-- 抽屉 -->
     <v-navigation-drawer
       v-model="primaryDrawer.model"
-      :permanent="primaryDrawer.type === 'permanent'"
-      :temporary="primaryDrawer.type === 'temporary'"
-      :clipped="primaryDrawer.clipped"
-      :floating="primaryDrawer.floating"
-      :mini-variant="primaryDrawer.mini"
-      width="240"
+      width="200"
+      floating
       fixed
       app
-      style="overflow: hidden;"
       dark
+      style="overflow: hidden;"
     >
       <v-img
-        src="https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-1.23832d31.jpg"
+        src="https://s2.ax1x.com/2019/06/16/VToxQH.jpg"
         gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
         height="100%"
       >
         <v-list>
           <v-list-tile avatar>
             <v-list-tile-avatar color="white">
-              <v-img
-                src="https://avatars1.githubusercontent.com/u/44082279?s=460&v=4"
-                height="34"
-                contain
-              />
+              <v-img src="https://avatars1.githubusercontent.com/u/44082279?s=460&v=4" height="34"/>
             </v-list-tile-avatar>
             <v-list-tile-title class="title">导航</v-list-tile-title>
           </v-list-tile>
@@ -49,33 +41,12 @@
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
-
-        <!-- <v-list class="pt-0 pl-4 pr-4" v-show="!primaryDrawer.mini">
-        <canvas id="canvasTime" style="width:100%"></canvas>
-        </v-list>-->
-        <!-- <v-sheet class="pd-0 pt-0" v-show="!primaryDrawer.mini">
-        <live2d
-          style="position: fixed;right: -50px;bottom: 0px;z-index:-1"
-          class="hidden-sm-and-down"
-        ></live2d>
-        </v-sheet>-->
       </v-img>
     </v-navigation-drawer>
 
     <!-- 顶部工具栏 -->
-    <v-toolbar
-      :clipped-left="primaryDrawer.clipped"
-      :scroll-off-screen="!primaryDrawer.clipped"
-      :absolute="!primaryDrawer.clipped"
-      :flat="primaryDrawer.clipped"
-      dense
-      fixed
-      app
-    >
-      <v-toolbar-side-icon
-        v-if="primaryDrawer.type !== 'permanent'"
-        @click.stop="primaryDrawer.model = !primaryDrawer.model"
-      ></v-toolbar-side-icon>
+    <v-toolbar scroll-off-screen absolute dense fixed app color="#ffffff66">
+      <v-toolbar-side-icon @click.stop="primaryDrawer.model = !primaryDrawer.model"></v-toolbar-side-icon>
       <v-toolbar-title>围巾落地冻成狗</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
@@ -84,55 +55,34 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
+
     <!-- 内容 -->
-    <v-content>
+
+    <v-content :class="{'pt-0':!xsSize}">
+      <div class="hidden-xs-only">
+        <div id="mask-box">
+          <v-img src="https://s2.ax1x.com/2019/06/16/VTTAfS.png" height="120"></v-img>
+        </div>
+        <v-img src="https://s2.ax1x.com/2019/06/16/VTTAfS.png" height="120"></v-img>
+      </div>
       <v-container fluid>
-        <!-- <v-layout align-center column> -->
         <keep-alive include="home,archive">
           <router-view style="border:1px solid"></router-view>
         </keep-alive>
-        <!-- </v-layout> -->
       </v-container>
     </v-content>
-    <!-- 页脚 -->
-    <!-- <v-footer :inset="footer.inset" app>
-      <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>-->
 
     <!--对话框  -->
     <v-dialog v-model="dialog" max-width="500" scrollable lazy>
       <v-card>
-        <v-toolbar flat dense color="blue">
-          title
-          <v-progress-linear indeterminate color="red"></v-progress-linear>
-        </v-toolbar>
         <v-card-text>
           <v-layout row wrap>
             <v-flex xs12 md6>
               <span>Scheme</span>
-              <v-switch v-model="dark" primary label="Dark"></v-switch>
-            </v-flex>
-            <v-flex xs12 md6>
-              <span>Drawer</span>
-              <v-radio-group v-model="primaryDrawer.type" column>
-                <v-radio
-                  v-for="drawer in drawers"
-                  :key="drawer"
-                  :label="drawer"
-                  :value="drawer.toLowerCase()"
-                  primary
-                ></v-radio>
-              </v-radio-group>
-              <v-switch v-model="primaryDrawer.clipped" label="Clipped" primary></v-switch>
-              <v-switch v-model="primaryDrawer.floating" label="Floating" primary></v-switch>
-              <v-switch v-model="primaryDrawer.mini" label="Mini" primary></v-switch>
-            </v-flex>
-            <v-flex xs12 md6>
-              <span>Footer</span>
-              <v-switch v-model="footer.inset" label="Inset" primary></v-switch>
             </v-flex>
           </v-layout>
         </v-card-text>
+
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn flat @click="dialog=false">Cancel</v-btn>
@@ -144,58 +94,40 @@
 </template>
 
 <script>
-import canvasTime from "@/assets/javascript/canvasTime.js";
-import Live2D from "./components/Live2D";
 import GetBlog from "./plugins/getBlog.js";
 
 export default {
   name: "app",
   data: () => ({
+    dialog: false,
     items: [
-      { title: "Home", icon: "fa-home", to: "/" },
+      { title: "首页", icon: "fa-home", to: "/" },
+      { title: "归档", icon: "fa-check-circle", to: "/archive" },
       { title: "About", icon: "fa-address-card", to: "/about" },
       { title: "Grid", icon: "fa-th-large", to: "/grid" },
-      { title: "Theme", icon: "fa-check-circle", to: "/theme" },
-      { title: "归档", icon: "fa-check-circle", to: "/archive" }
+      { title: "Theme", icon: "fa-check-circle", to: "/theme" }
     ],
-    dialog: false,
-    dark: false,
-    drawers: ["Default (no property)", "Permanent", "Temporary"],
     primaryDrawer: {
-      model: null,
-      type: "default (no property)",
-      clipped: false,
-      floating: false,
-      mini: false
-    },
-    footer: {
-      inset: false
+      model: null
     },
     canvasTimeCallBack: null
   }),
   computed: {
-    clockColor() {
-      return this.$vuetify.theme.primary;
+    xsSize() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return true;
+        default:
+          return false;
+      }
     }
   },
-  watch: {
-    clockColor: function() {
-      this.canvasTimeCallBack = canvasTime(
-        "canvasTime",
-        this.clockColor,
-        this.canvasTimeCallBack
-      );
-    }
-  },
-  components: {
-    live2d: Live2D
-  },
+  watch: {},
+  components: {},
   beforeCreate() {
     GetBlog(this);
   },
-  mounted() {
-    // this.canvasTimeCallBack = canvasTime("canvasTime", this.clockColor);
-  }
+  mounted() {}
 };
 </script>
 
@@ -206,6 +138,15 @@ export default {
 }
 .my-v-list-tile >>> a {
   color: inherit !important;
+}
+#mask-box {
+  height: 48px;
+  margin-bottom: 72px;
+  filter: blur(4px);
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 }
 </style>
 
