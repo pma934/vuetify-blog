@@ -15,7 +15,8 @@ export default {
   },
   mounted() {
     this.$axios.get("https://www.tianqiapi.com/api/").then(res => {
-      this.weather = JSON.parse(res.data.split("</b><br />")[1]);
+      console.log(res)
+      this.weather = res.data;
     });
   }
 };

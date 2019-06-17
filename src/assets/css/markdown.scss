@@ -266,7 +266,7 @@
   padding: 0;
 }
 
-//语法高亮
+//语法高亮 后设置的per code 编辑器样式
 .markdown-body pre code ol {
   margin: 0;
 
@@ -274,8 +274,24 @@
     background-color: #333;
     color: #eee;
     padding-left: .5em;
-    &:hover{
+
+    &:hover {
       background-color: #666;
     }
   }
+}
+
+//per code 头部
+.markdown-body div.highlight-code-head {
+  box-shadow: 0 10px 30px 0px rgba(0, 0, 0, 0.4);
+  background-color: #21252b;
+  margin-left: -6px;
+  color: #eee;
+  padding: 5px;
+  text-align: center !important;
+  font-size: 20px !important;
+  font-weight: 500;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+  font-family: 'Roboto', sans-serif !important;
 }
