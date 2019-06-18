@@ -9,7 +9,7 @@ import NestedGrid from "@/components/NestedGrid";
 import UniqueLayouts from "@/components/UniqueLayouts";
 
 export default {
-  name:"grid",
+  name: "grid",
   components: {
     NestedGrid,
     UniqueLayouts
