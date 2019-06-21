@@ -7,14 +7,27 @@
             <v-flex>
               <v-card class="pa-1">
                 <div v-if="blog">
-                  <a :href="blog.html_url" target="_black" id="title">{{blog.title}}</a>
-                  <p>{{blog.created_at}}</p>
-                  <span>{{blog.labels}}</span>
+                  <a :src="blog.html" style="text-decoration:none"  target="_block">
+                    <span class="display-1 font-weight-light py-1">{{ blog.title }}</span>
+                  </a>
+                  <div>
+                    <v-chip
+                      class="small-chip"
+                      v-for="label in blog.labels"
+                      :key="label.node_id"
+                      :style="{backgroundColor:'#'+label.color}"
+                      text-color="white"
+                      disabled
+                    >{{label.name}}</v-chip>
+                  </div>
+                  <p
+                    class="subheading font-weight-thin font-italic my-0"
+                  >{{ dateFormat(blog.created_at) }}</p>
                 </div>
               </v-card>
             </v-flex>
             <v-flex>
-              <v-card class="pa-1">
+              <v-card class="pa-1 my-2">
                 <div class="markdown-body" v-html="data"></div>
               </v-card>
             </v-flex>
@@ -58,7 +71,7 @@ export default {
         }
         this.$axios
           .get(
-            `https://api.github.com/repos/pma934/pma934.github.io/issues/${x}&access_token=d8b2ddf36b8f3485751c1457d58151b9e2c5c1a4`
+            `https://api.github.com/repos/pma934/pma934.github.io/issues/${x}&access_token=ef1539f92765d49d0196257f861a59872993a4c5`
           )
           .then(res => resolve(res.data), err => reject(err));
       });
@@ -88,6 +101,11 @@ export default {
       document.execCommand("copy");
       alert("复制成功");
       selection.removeAllRanges(); //将所有的区域都从选区中移除
+    },
+    dateFormat: function(str) {
+      return new Date(str)
+        .toLocaleDateString()
+        .replace(/\//g,"-");
     }
   },
   components: {},
@@ -96,12 +114,12 @@ export default {
     //渲染内容
     this.getBlog(this.$route.params.number).then(
       res => {
+        console.log(res)
         this.blog = res;
         let div = document.createElement("div");
         div.innerHTML = this.$marked(res.body);
         //生成文章目录
-        let directory = Array.prototype.slice
-          .call(div.children)
+        let directory = Array.from(div.children)
           .filter(
             node => ["H1", "H2", "H3", "H4"].indexOf(node.tagName) !== -1
           );
@@ -154,62 +172,8 @@ export default {
 
 
 <style lang="scss">
-pre:before {
-  content: " ";
-  position: absolute;
-  border-radius: 50%;
-  background: #fc625d;
-  width: 12px;
-  height: 12px;
-  margin-top: 8px;
-  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
-}
-.copy-code {
-  color: #fff;
-  float: right;
-  margin-top: -26px;
-  padding-right: 6px;
-  font-size: 16px;
-}
-.copy-code :hover {
-  color: #ccc;
-}
-.markdown-directory {
-  position: fixed;
-  top: 8%;
-  border-left: 1px solid #aaa;
-  padding: 4px;
-  margin: 4px;
-  max-height: 82%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-.markdown-directory {
-  h1,
-  h2,
-  h3,
-  h4 {
-    cursor: pointer;
-    color: var(--v-primary-base);
-    position: relative;
-    font-size: 1em;
-    line-height: 1.6em;
-    font-weight: bold;
-  }
-  h2 {
-    margin-left: 1em;
-  }
-  h3 {
-    margin-left: 2em;
-  }
-  h4 {
-    margin-left: 3em;
-  }
-  hr {
-    width: 50%;
-    border: 0;
-    border-top: 1px solid #aaa;
-  }
+.small-chip {
+  height: 1rem !important;
 }
 </style>
 

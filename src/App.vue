@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app">
+  <v-app id="app" class="app-background">
     <!-- 抽屉 -->
     <v-navigation-drawer
       v-model="primaryDrawer.model"
@@ -67,7 +67,7 @@
       </div>
       <v-container fluid>
         <keep-alive include="home,archive">
-          <router-view style="border:1px solid"></router-view>
+          <router-view style="border:0px solid"></router-view>
         </keep-alive>
       </v-container>
     </v-content>
@@ -132,6 +132,10 @@ export default {
 </script>
 
 <style scoped>
+.app-background {
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
 .my-v-list-tile >>> .v-list__tile--active {
   background-color: var(--v-primary-base) !important;
   border-radius: 4px;
