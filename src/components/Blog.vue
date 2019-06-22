@@ -1,6 +1,5 @@
 <template>
   <div id="Blog">
-    <!-- <code>{{blog}}</code> -->
     <div class="headline">Archive</div>
     <v-container grid-list-lg>
       <v-layout column>
@@ -40,31 +39,54 @@ export default {
   name: "Blog",
   data() {
     return {
-      currentPage: 1
+      currentPage: 1,
+      blogsNumber:null,
     };
+  },
+  props: {
+    filter: String
   },
   computed: {
     blogs() {
-      return this.$store.state.blog;
+      let blogs = this.$store.state.blog
+      this.blogsNumber = blogs.length
+      return blogs;
     },
     totalPage() {
       return this.$store.state.per5Pages;
     },
     showBlogs() {
-      return this.blogs.slice(0, 5 * this.currentPage);
+      let blogs = this.blogs;
+      if (this.filter) {
+        blogs = blogs.filter(blog => {
+          for (let label of blog.labels) {
+            if (label.name === this.filter) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+      this.blogsNumber = blogs.length
+      return blogs.slice(0, 5 * this.currentPage);
     },
     btnShow() {
       return (
-        5 * this.currentPage < this.blogs.length ||
-        (5 * this.currentPage == this.blogs.length &&
+        5 * this.currentPage < this.blogsNumber ||
+        (5 * this.currentPage == this.blogsNumber &&
           this.currentPage < this.totalPage)
       );
     },
     circShow() {
       return (
-        !this.blogs.length ||
-        (5 * this.currentPage > this.blogs.length && this.totalPage != 1)
+        !this.blogsNumber ||
+        (this.currentPage > this.totalPage && this.totalPage != 1)
       );
+    }
+  },
+  watch:{
+    filter:function(){
+      this.currentPage = 1;
     }
   },
   methods: {

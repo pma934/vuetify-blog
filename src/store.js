@@ -8,6 +8,7 @@ export default new Vuex.Store({
     codePen: {},
     blog: [],
     per5Pages: 1, //5分页 总页数
+    labels:[],
   },
   getters: {
     per100Pages: state => { //100分页 总页数
@@ -21,7 +22,6 @@ export default new Vuex.Store({
     setBlog(state, [list, page]) {
       // console.log(page)
       if (page == 1) {
-        
         state.blog = list
       } else {
         state.blog = state.blog.concat(list)

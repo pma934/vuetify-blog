@@ -6,6 +6,7 @@ import store from './store'
 import './registerServiceWorker'
 import axios from 'axios'
 import './plugins/marked'
+import './assets/css/global.css';
 
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false

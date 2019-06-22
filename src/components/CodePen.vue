@@ -30,8 +30,8 @@
                 </v-img>
               </a>
               <v-card-actions>
-                <v-btn flat small color="orange" :href="codePenItem.full" target="_blank">FULL</v-btn>
-                <v-btn flat small color="orange" :href="codePenItem.pen" target="_blank">PEN</v-btn>
+                <v-btn flat small color="primary" :href="codePenItem.full" target="_blank">FULL</v-btn>
+                <v-btn flat small color="primary" :href="codePenItem.pen" target="_blank">PEN</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>

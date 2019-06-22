@@ -3,11 +3,11 @@
     <v-container fluid grid-list-sm class="pa-0">
       <v-layout row wrap align-space-around fill-height>
         <v-flex xs12 md10 ref="BlogBody">
-          <v-layout column wrap>
+          <v-layout column wrap v-if="blog">
             <v-flex>
               <v-card class="pa-1">
-                <div v-if="blog">
-                  <a :src="blog.html" style="text-decoration:none"  target="_block">
+                <div>
+                  <a :href="blog.html_url" id="title" style="text-decoration:none" target="_blank">
                     <span class="display-1 font-weight-light py-1">{{ blog.title }}</span>
                   </a>
                   <div>
@@ -37,12 +37,19 @@
               </v-card>
             </v-flex>
           </v-layout>
+          <p class="text-md-center" v-if="!blog">
+            <v-progress-circular indeterminate color="primary"></v-progress-circular>
+          </p>
         </v-flex>
         <v-flex class="hidden-sm-and-down" xs0 md2 v-show="scrollY>120">
           <div class="markdown-directory" ref="BlogDirectory" v-html="directory"></div>
         </v-flex>
       </v-layout>
     </v-container>
+    <v-snackbar v-model="copyMsg" timeout="2000" top right>
+      复制成功
+      <v-btn flat @click="copyMsg = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -55,7 +62,10 @@ export default {
       blog: null,
       data: null,
       directory: null,
-      scrollY: 0
+      comments: null,
+      scrollY: 0,
+      imgEnBig: false,
+      copyMsg: false
     };
   },
   computed: {},
@@ -71,7 +81,7 @@ export default {
         }
         this.$axios
           .get(
-            `https://api.github.com/repos/pma934/pma934.github.io/issues/${x}&access_token=ef1539f92765d49d0196257f861a59872993a4c5`
+            `https://api.github.com/repos/pma934/pma934.github.io/issues/${x}&access_token=e11bba32422f9b34868b1f4f1bc724e79cf82f00`
           )
           .then(res => resolve(res.data), err => reject(err));
       });
@@ -99,13 +109,12 @@ export default {
       range.selectNode(Node); //把范围边界设置为一个节点的子节点
       selection.addRange(range); //将一个区域（Range）对象加入选区
       document.execCommand("copy");
-      alert("复制成功");
+      // alert("复制成功");
+      this.copyMsg = true;
       selection.removeAllRanges(); //将所有的区域都从选区中移除
     },
     dateFormat: function(str) {
-      return new Date(str)
-        .toLocaleDateString()
-        .replace(/\//g,"-");
+      return new Date(str).toLocaleDateString().replace(/\//g, "-");
     }
   },
   components: {},
@@ -114,15 +123,14 @@ export default {
     //渲染内容
     this.getBlog(this.$route.params.number).then(
       res => {
-        console.log(res)
+        console.log(res);
         this.blog = res;
         let div = document.createElement("div");
         div.innerHTML = this.$marked(res.body);
         //生成文章目录
-        let directory = Array.from(div.children)
-          .filter(
-            node => ["H1", "H2", "H3", "H4"].indexOf(node.tagName) !== -1
-          );
+        let directory = Array.from(div.children).filter(
+          node => ["H1", "H2", "H3", "H4"].indexOf(node.tagName) !== -1
+        );
         this.directory =
           "<h1 data-id='title'>Title</h1><hr>" +
           directory
@@ -144,19 +152,31 @@ export default {
     );
   },
   mounted: function() {
-    //注册copy事件
+    //注册copy事件与图片放大
     let that = this;
     this.$refs["BlogBody"].addEventListener("click", function() {
       if (event.target.className === "fa fa-clipboard") {
         // console.log(event.target.parentNode.nextElementSibling.innerText.replace(/\n\n/g,'\n'))
-        var textNode = event.target.parentNode.nextElementSibling; //获取要选中的内容
+        let textNode = event.target.parentNode.nextElementSibling; //获取要选中的内容
         that.copyNodeText(textNode);
       }
+      // if (event.target.tagName === "IMG") {  //放大图片，感觉暂时用不着
+      //   console.log("放大");
+      //   let src = event.target.src;
+      //   let div = document.createElement("div");
+      //   div.style.cssText =
+      //     "position:fixed;top:0;right:0;bottom:0;left:0;z-index:1001;display:flex;justify-content:center;align-items:center;background:#22222290";
+      //   div.innerHTML = `<img src=${src}></img>`;
+      //   document.body.appendChild(div);
+      //   div.onclick = function() {
+      //     document.body.removeChild(div);
+      //   };
+      // }
     });
     //绑定滑动事件
     this.$refs["BlogDirectory"].addEventListener("click", function() {
       let id = event.target.getAttribute("data-id");
-      that.$refs["BlogBody"].querySelector("#" + id).scrollIntoView();
+      document.getElementById(id).scrollIntoView();
     });
     //绑定滑动显示事件
     window.onscroll = function() {

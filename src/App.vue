@@ -11,7 +11,7 @@
       style="overflow: hidden;"
     >
       <v-img
-        src="https://s2.ax1x.com/2019/06/16/VToxQH.jpg"
+        :src="drawerImages[drawerImageIndex]"
         gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
         height="100%"
       >
@@ -49,8 +49,8 @@
       <v-toolbar-side-icon @click.stop="primaryDrawer.model = !primaryDrawer.model"></v-toolbar-side-icon>
       <v-toolbar-title>围巾落地冻成狗</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn icon @click.stop="dialog=!dialog">
+      <v-toolbar-items>
+        <v-btn icon @click.stop="themeDialog=!themeDialog">
           <v-icon>fa-cog</v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -73,19 +73,24 @@
     </v-content>
 
     <!--对话框  -->
-    <v-dialog v-model="dialog" max-width="500" scrollable lazy>
+    <v-dialog v-model="themeDialog" max-width="800" scrollable lazy>
       <v-card>
+        <v-card-title class="title primary" primary-title>主题设置</v-card-title>
         <v-card-text>
+          主题色:
+          <input type="color" v-model="primaryColor">
           <v-layout row wrap>
-            <v-flex xs12 md6>
-              <span>Scheme</span>
+            <v-flex v-for="(url,index) in drawerImages" :key="url" xs6 sm4 md2 d-flex>
+              <v-card hover flat tile class="d-flex ma-1" @click.stop="drawerImageIndex=index">
+                <v-img :src="url" class="grey lighten-2"></v-img>
+              </v-card>
             </v-flex>
           </v-layout>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat @click="dialog=false">Cancel</v-btn>
+          <v-btn flat @click="themeDialog=false">Cancel</v-btn>
           <v-btn flat color="primary">Submit</v-btn>
         </v-card-actions>
       </v-card>
@@ -98,20 +103,32 @@ import GetBlog from "./plugins/getBlog.js";
 
 export default {
   name: "app",
-  data: () => ({
-    dialog: false,
-    items: [
-      { title: "首页", icon: "fa-home", to: "/" },
-      { title: "归档", icon: "fa-check-circle", to: "/archive" },
-      { title: "About", icon: "fa-address-card", to: "/about" },
-      { title: "Grid", icon: "fa-th-large", to: "/grid" },
-      { title: "Theme", icon: "fa-check-circle", to: "/theme" }
-    ],
-    primaryDrawer: {
-      model: null
-    },
-    canvasTimeCallBack: null
-  }),
+  data() {
+    return {
+      themeDialog: false,
+      primaryColor: this.$vuetify.theme.primary,
+      items: [
+        { title: "首页", icon: "fa-home", to: "/" },
+        { title: "归档", icon: "fa-check-circle", to: "/archive" },
+        { title: "About", icon: "fa-address-card", to: "/about" },
+        { title: "Grid", icon: "fa-th-large", to: "/grid" },
+        { title: "Theme", icon: "fa-check-circle", to: "/theme" }
+      ],
+      primaryDrawer: {
+        model: null
+      },
+      drawerImageIndex: 0,
+      drawerImages: [
+        "https://s2.ax1x.com/2019/06/16/VToxQH.jpg",
+        "https://s2.ax1x.com/2019/06/23/Z9z7DK.jpg",
+        "https://s2.ax1x.com/2019/06/23/Z9zHHO.jpg",
+        "https://s2.ax1x.com/2019/06/23/Z9zLUe.jpg",
+        "https://s2.ax1x.com/2019/06/23/Z9zO4H.jpg",
+        "https://s2.ax1x.com/2019/06/23/Z9zqED.jpg"
+      ]
+    };
+  },
+
   computed: {
     xsSize() {
       switch (this.$vuetify.breakpoint.name) {
@@ -122,7 +139,13 @@ export default {
       }
     }
   },
-  watch: {},
+  watch: {
+    primaryColor: function(newColor) {
+      // console.log(newColor, oldColor)
+      this.$vuetify.theme.primary = newColor;
+      //document.documentElement.style.setProperty("--v-primary-base", newColor);
+    }
+  },
   components: {},
   beforeCreate() {
     GetBlog(this);

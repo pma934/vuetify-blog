@@ -1,13 +1,14 @@
 export default function (vue) {
     getBlog.call(vue, init, 5)
     getBlog.call(vue, getAll, 100)
+    getLabels.call(vue)
 }
 
 function getBlog(fn, per_page, page = 1) {
     this.$axios
         .get(
-            `https://api.github.com/repos/vuejs/vue/issues?per_page=${per_page}&page=${page}&access_token=ef1539f92765d49d0196257f861a59872993a4c5`
-        )//vuejs/vue           pma934/pma934.github.io
+            `https://api.github.com/repos/pma934/pma934.github.io/issues?per_page=${per_page}&page=${page}&access_token=e11bba32422f9b34868b1f4f1bc724e79cf82f00`
+        ) //vuejs/vue           pma934/pma934.github.io
         .then(
             res => {
                 fn.call(this, res, page);
@@ -16,7 +17,7 @@ function getBlog(fn, per_page, page = 1) {
         );
 }
 
-function init(res,page) {
+function init(res, page) {
     //初始化，先获取5个展示，和设置总页数
     // console.log("init");
     this.$store.commit("setBlog", [res.data, page]);
@@ -38,4 +39,18 @@ function getAll(res, page) {
         //每页100个，从第一页获取到最后一页当前页数
         getBlog.call(this, getAll, 100, page + 1);
     }
+}
+
+function getLabels() {
+    this.$axios
+        .get(
+            `https://api.github.com/repos/pma934/pma934.github.io/labels`
+        )
+        .then(
+            res => {
+                this.$store.state.labels = res.data;
+                console.log(res.data)
+            },
+            err => {}
+        );
 }

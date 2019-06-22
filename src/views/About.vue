@@ -1,8 +1,9 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <p>{{$store.state.blog.length}}</p>
-    <p>{{$store.state.per5Pages}}</p>
+    <p>blog.length:{{$store.state.blog.length}}</p>
+    <p>per5Pages:{{$store.state.per5Pages}}</p>
+    <p>per100Pages:{{$store.getters.per100Pages}}</p>
     <p>{{imageHeight}}</p>
     <WeatherForecast/>
   </div>
