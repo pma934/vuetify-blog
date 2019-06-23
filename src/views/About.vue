@@ -5,7 +5,6 @@
     <p>per5Pages:{{$store.state.per5Pages}}</p>
     <p>per100Pages:{{$store.getters.per100Pages}}</p>
     <p>{{imageHeight}}</p>
-    <WeatherForecast/>
   </div>
 </template>
 

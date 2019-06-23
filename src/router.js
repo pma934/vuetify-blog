@@ -16,9 +16,9 @@ export default new Router({
       component: () => import('./views/About.vue'), //  lazy-loaded
     },
     {
-      path: '/grid',
-      name: 'grid',
-      component: () => import('./views/Grid.vue')
+      path: '/hot',
+      name: 'hot',
+      component: () => import('./views/Hot.vue')
 
     },
     {

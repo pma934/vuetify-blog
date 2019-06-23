@@ -47,7 +47,7 @@
     <!-- 顶部工具栏 -->
     <v-toolbar scroll-off-screen absolute dense fixed app color="#ffffff66">
       <v-toolbar-side-icon @click.stop="primaryDrawer.model = !primaryDrawer.model"></v-toolbar-side-icon>
-      <v-toolbar-title>围巾落地冻成狗</v-toolbar-title>
+      <v-toolbar-title>围巾落地的个人主页</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn icon @click.stop="themeDialog=!themeDialog">
@@ -61,9 +61,9 @@
     <v-content :class="{'pt-0':!xsSize}">
       <div class="hidden-xs-only">
         <div id="mask-box">
-          <v-img src="https://s2.ax1x.com/2019/06/16/VTTAfS.png" height="120"></v-img>
+          <v-img src="https://s2.ax1x.com/2019/02/07/ktdtVs.jpg" height="120"></v-img>
         </div>
-        <v-img src="https://s2.ax1x.com/2019/06/16/VTTAfS.png" height="120"></v-img>
+        <v-img src="https://s2.ax1x.com/2019/02/07/ktdtVs.jpg" height="120"></v-img>
       </div>
       <v-container fluid>
         <keep-alive include="home,archive">
@@ -81,8 +81,15 @@
           <input type="color" v-model="primaryColor">
           <v-layout row wrap>
             <v-flex v-for="(url,index) in drawerImages" :key="url" xs6 sm4 md2 d-flex>
-              <v-card hover flat tile class="d-flex ma-1" @click.stop="drawerImageIndex=index">
-                <v-img :src="url" class="grey lighten-2"></v-img>
+              <v-card
+                hover
+                flat
+                tile
+                class="d-flex ma-1 theme-card"
+                :class="{'theme-card--select':drawerImageIndex===index}"
+                @click.stop="drawerImageIndex=index"
+              >
+                <v-img :src="url"></v-img>
               </v-card>
             </v-flex>
           </v-layout>
@@ -90,8 +97,8 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat @click="themeDialog=false">Cancel</v-btn>
-          <v-btn flat color="primary">Submit</v-btn>
+          <v-btn flat color="primary" @click="saveTheme();themeDialog=false">保存设置</v-btn>
+          <v-btn flat @click="themeDialog=false">关闭</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -109,10 +116,10 @@ export default {
       primaryColor: this.$vuetify.theme.primary,
       items: [
         { title: "首页", icon: "fa-home", to: "/" },
-        { title: "归档", icon: "fa-check-circle", to: "/archive" },
-        { title: "About", icon: "fa-address-card", to: "/about" },
-        { title: "Grid", icon: "fa-th-large", to: "/grid" },
-        { title: "Theme", icon: "fa-check-circle", to: "/theme" }
+        { title: "归档", icon: "fa-folder-open", to: "/archive" },
+        // { title: "关于", icon: "fa-address-card", to: "/about" },
+        { title: "热门", icon: "fa-fire", to: "/hot" }
+        // { title: "作品", icon: "fa-box", to: "/theme" }
       ],
       primaryDrawer: {
         model: null
@@ -128,7 +135,6 @@ export default {
       ]
     };
   },
-
   computed: {
     xsSize() {
       switch (this.$vuetify.breakpoint.name) {
@@ -146,11 +152,24 @@ export default {
       //document.documentElement.style.setProperty("--v-primary-base", newColor);
     }
   },
+  methods: {
+    saveTheme() {
+      localStorage.setItem("primaryColor", this.primaryColor);
+      localStorage.setItem("drawerImageIndex", this.drawerImageIndex);
+    }
+  },
   components: {},
   beforeCreate() {
     GetBlog(this);
   },
-  mounted() {}
+  mounted() {
+    let drawerImageIndex = localStorage.getItem("drawerImageIndex");
+    let primaryColor = localStorage.getItem("primaryColor");
+    this.drawerImageIndex = drawerImageIndex
+      ? drawerImageIndex
+      : this.drawerImageIndex;
+    this.primaryColor = primaryColor ? primaryColor : this.primaryColor;
+  }
 };
 </script>
 
@@ -174,6 +193,13 @@ export default {
   position: absolute;
   width: 100%;
   z-index: 1;
+}
+.theme-card {
+  border: 2px solid #eee;
+  border-radius: 1em;
+}
+.theme-card--select {
+  border-color: var(--v-primary-base);
 }
 </style>
 

@@ -7,8 +7,8 @@ export default function (vue) {
 function getBlog(fn, per_page, page = 1) {
     this.$axios
         .get(
-            `https://api.github.com/repos/pma934/pma934.github.io/issues?per_page=${per_page}&page=${page}&access_token=e11bba32422f9b34868b1f4f1bc724e79cf82f00`
-        ) //vuejs/vue           pma934/pma934.github.io
+            `https://api.github.com/repos/pma934/pma934.github.io/issues?per_page=${per_page}&page=${page}`
+        ) //vuejs/vue           pma934/pma934.github.io &access_token=e11bba32422f9b34868b1f4f1bc724e79cf82f00
         .then(
             res => {
                 fn.call(this, res, page);

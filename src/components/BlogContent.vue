@@ -46,7 +46,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-snackbar v-model="copyMsg" timeout="2000" top right>
+    <v-snackbar v-model="copyMsg" :timeout=2000 top right>
       复制成功
       <v-btn flat @click="copyMsg = false">Close</v-btn>
     </v-snackbar>
@@ -81,7 +81,7 @@ export default {
         }
         this.$axios
           .get(
-            `https://api.github.com/repos/pma934/pma934.github.io/issues/${x}&access_token=e11bba32422f9b34868b1f4f1bc724e79cf82f00`
+            `https://api.github.com/repos/pma934/pma934.github.io/issues/${x}`
           )
           .then(res => resolve(res.data), err => reject(err));
       });
