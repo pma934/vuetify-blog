@@ -79,14 +79,15 @@
         <v-card-text>
           主题色:
           <input type="color" v-model="primaryColor">
+
           <v-layout row wrap>
             <v-flex v-for="(url,index) in drawerImages" :key="url" xs6 sm4 md2 d-flex>
               <v-card
                 hover
                 flat
                 tile
-                class="d-flex ma-1 theme-card"
-                :class="{'theme-card--select':drawerImageIndex===index}"
+                class="theme-card d-flex ma-2"
+                :class="{'theme-card--select':drawerImageIndex==index}"
                 @click.stop="drawerImageIndex=index"
               >
                 <v-img :src="url"></v-img>

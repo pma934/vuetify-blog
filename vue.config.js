@@ -33,7 +33,13 @@ module.exports = {
   }, // use thread-loader for babel & TS in production build // enabled by default if the machine has more than 1 cores
 
   parallel: require("os").cpus().length > 1, // PWA 插件相关配置 // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-
+  configureWebpack: {
+    externals: {  //外部扩展
+      'axios': 'axios',
+      'highlight.js':'highlight.js',
+      'marked':'marked',
+    }
+  },
   pwa: {}, // configure webpack-dev-server behavior
   devServer: {
     disableHostCheck: false,

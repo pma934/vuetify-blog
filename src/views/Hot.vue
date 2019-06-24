@@ -8,14 +8,7 @@
           </p>
           <v-layout column v-if="trend">
             <v-card class="pa-3">
-              <!-- <v-layout wrap> -->
-              <!-- <v-flex sm3> -->
               <span class="display-1 font-weight-bold">热门项目</span>
-              <!-- </v-flex> -->
-
-              <!-- <v-flex sm5> -->
-              <!-- <v-layout wrap style="width:250px"> -->
-              <!-- <v-flex xs6> -->
               <div class="menu-box">
                 <v-menu>
                   <template v-slot:activator="{ on }">
@@ -27,8 +20,6 @@
                     </v-list-tile>
                   </v-list>
                 </v-menu>
-                <!-- </v-flex>
-                <v-flex xs6>-->
                 <v-menu>
                   <template v-slot:activator="{ on }">
                     <v-btn color="primary" class="menu-btn" v-on="on">{{lang}}</v-btn>
@@ -40,10 +31,6 @@
                   </v-list>
                 </v-menu>
               </div>
-              <!-- </v-flex> -->
-              <!-- </v-layout> -->
-              <!-- </v-flex> -->
-              <!-- </v-layout> -->
             </v-card>
             <v-flex v-for="t in trend" :key="t.repo" class="pa-0">
               <v-card class="pa-3">
@@ -142,12 +129,8 @@ export default {
           }${lang}`
         )
         .then(res => {
-          console.log(res);
           this.trend = res.data.items;
         })
-        .catch(err => {
-          console.log(err);
-        });
     }
   },
   components: {},
