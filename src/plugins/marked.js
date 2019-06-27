@@ -8,7 +8,7 @@ Vue.prototype.$marked = marked
 marked.setOptions({
   renderer: new marked.Renderer(),
   highlight: function (code) {
-    return require('highlight.js').highlightAuto(code).value;
+    return hljs.highlightAuto(code).value;
   },
   gfm: true,
   tables: true,

@@ -36,7 +36,6 @@ module.exports = {
   configureWebpack: {
     externals: {  //外部扩展
       'axios': 'axios',
-      'highlight.js':'highlight.js',
       'marked':'marked',
     }
   },
