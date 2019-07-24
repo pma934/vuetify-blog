@@ -18,13 +18,13 @@
         <v-list>
           <v-list-tile avatar>
             <v-list-tile-avatar color="white">
-              <v-img src="https://s2.ax1x.com/2019/06/16/V7QVCn.jpg" height="34"/>
+              <v-img src="https://s2.ax1x.com/2019/06/16/V7QVCn.jpg" height="34" />
             </v-list-tile-avatar>
             <v-list-tile-title class="title">导航</v-list-tile-title>
           </v-list-tile>
         </v-list>
 
-        <v-divider class="mx-3"/>
+        <v-divider class="mx-3" />
 
         <v-list class="pt-0">
           <v-list-tile
@@ -78,9 +78,9 @@
         <v-card-title class="title primary" primary-title>主题设置</v-card-title>
         <v-card-text>
           主题色:
-          <input type="color" v-model="primaryColor">
-          <v-layout row wrap>
-            <v-flex v-for="(url,index) in drawerImages" :key="url" xs6 sm4 md2 d-flex>
+          <input type="color" v-model="primaryColor" />
+          <v-layout row wrap justify-center>
+            <!-- <v-flex v-for="(url,index) in drawerImages" :key="url" xs6 sm4 md2 d-flex>
               <v-card
                 hover
                 flat
@@ -91,7 +91,17 @@
               >
                 <v-img :src="url"></v-img>
               </v-card>
-            </v-flex>
+            </v-flex>-->
+            <rotateCard
+              :cards-url="drawerImages"
+              :radius="150"
+              :cardWidth="100"
+              :cardHeight="170"
+              :clockwise="false"
+              :cycle="30"
+              :isDrag="false"
+              :cardClickEvent="(_,index)=>{drawerImageIndex=index}"
+            ></rotateCard>
           </v-layout>
         </v-card-text>
 
@@ -107,6 +117,7 @@
 
 <script>
 import GetBlog from "./plugins/getBlog.js";
+import rotateCard from "vue-zxz-components";
 
 export default {
   name: "app",
@@ -117,7 +128,7 @@ export default {
       items: [
         { title: "首页", icon: "fa-home", to: "/" },
         { title: "归档", icon: "fa-folder-open", to: "/archive" },
-        // { title: "关于", icon: "fa-address-card", to: "/about" },
+        { title: "关于", icon: "fa-address-card", to: "/about" },
         { title: "热门", icon: "fa-fire", to: "/hot" }
         // { title: "作品", icon: "fa-box", to: "/theme" }
       ],
@@ -158,7 +169,9 @@ export default {
       localStorage.setItem("drawerImageIndex", this.drawerImageIndex);
     }
   },
-  components: {},
+  components: {
+    rotateCard
+  },
   beforeCreate() {
     GetBlog(this);
   },
