@@ -19,7 +19,7 @@
 
 <script>
 import WeatherForecast from "@/components/WeatherForecast";
-import rotateCard from "vue-zxz-components"
+import rotateCard from "zxz-components"
 
 export default {
   name: "about",

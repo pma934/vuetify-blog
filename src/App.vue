@@ -117,7 +117,7 @@
 
 <script>
 import GetBlog from "./plugins/getBlog.js";
-import rotateCard from "vue-zxz-components";
+import rotateCard from "zxz-components";
 
 export default {
   name: "app",
