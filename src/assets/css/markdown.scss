@@ -14,7 +14,6 @@
 .markdown-body {
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
-  // color: #333;
   line-height: 1.6;
   word-wrap: break-word;
   -webkit-border-radius: 0 0 3px 3px;
@@ -89,7 +88,6 @@
 
 .markdown-body h6 {
   font-size: 1em;
-  // color: #777;
 }
 
 .markdown-body ol,
@@ -157,10 +155,8 @@
 .markdown-body pre {
   word-wrap: normal;
   padding-left: 6px;
-  // overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  // background-color: #6f1818;
   background-color: #333;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -273,12 +269,12 @@
   background-color: #333;
   overflow: auto;
   li {
-    //background-color: #333;
     color: #eee;
     padding-left: .5em;
-
-    &:hover {
-      background-color: #666;
+    @media (min-width: 600px) {
+      &:hover {
+        background-color: #666;
+      }
     }
   }
 }

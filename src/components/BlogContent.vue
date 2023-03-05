@@ -5,7 +5,7 @@
         <v-flex xs12 md10 ref="BlogBody">
           <v-layout column wrap v-if="blog">
             <v-flex>
-              <v-card class="pa-1">
+              <v-card class="pa-2">
                 <div>
                   <a :href="blog.html_url" id="title" style="text-decoration:none" target="_blank">
                     <span class="display-1 font-weight-light py-1">{{ blog.title }}</span>
@@ -27,13 +27,8 @@
               </v-card>
             </v-flex>
             <v-flex>
-              <v-card class="pa-1 my-2">
+              <v-card class="pa-2 my-2">
                 <div class="markdown-body" v-html="data"></div>
-              </v-card>
-            </v-flex>
-            <v-flex>
-              <v-card class="pa-1">
-                <div id="comments">Comments</div>
               </v-card>
             </v-flex>
           </v-layout>
@@ -46,7 +41,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-snackbar v-model="copyMsg" :timeout=2000 top right>
+    <v-snackbar v-model="copyMsg" :timeout="2000" top right>
       复制成功
       <v-btn flat @click="copyMsg = false">Close</v-btn>
     </v-snackbar>
@@ -104,14 +99,13 @@ export default {
     },
     copyNodeText(Node) {
       let selection = window.getSelection();
-      selection.removeAllRanges(); //将所有的区域都从选区中移除
-      let range = new Range(); //返回新创建的 Range 对象，两个边界点都被设置为文档的开头
-      range.selectNode(Node); //把范围边界设置为一个节点的子节点
-      selection.addRange(range); //将一个区域（Range）对象加入选区
+      selection.removeAllRanges();
+      let range = new Range();
+      range.selectNode(Node);
+      selection.addRange(range);
       document.execCommand("copy");
-      // alert("复制成功");
       this.copyMsg = true;
-      selection.removeAllRanges(); //将所有的区域都从选区中移除
+      selection.removeAllRanges();
     },
     dateFormat: function(str) {
       return new Date(str).toLocaleDateString().replace(/\//g, "-");
@@ -120,14 +114,13 @@ export default {
   components: {},
   beforeCreate() {},
   created() {
-    //渲染内容
     this.getBlog(this.$route.params.number).then(
       res => {
-        console.log(res);
+        document.title = res.title;
         this.blog = res;
+        this.data = res.body;
         let div = document.createElement("div");
         div.innerHTML = this.$marked(res.body);
-        //生成文章目录
         let directory = Array.from(div.children).filter(
           node => ["H1", "H2", "H3", "H4"].indexOf(node.tagName) !== -1
         );
@@ -140,9 +133,7 @@ export default {
               newNode.removeAttribute("id");
               return newNode.outerHTML;
             })
-            .join("") +
-          "<hr><h1 data-id='comments'>Comments</h1>";
-        //添加头部和复制按钮
+            .join("");
         Array.prototype.slice
           .call(div.querySelectorAll("pre code"))
           .map(codeNode => this.addHeadAndCopyIcon(codeNode));
@@ -152,26 +143,12 @@ export default {
     );
   },
   mounted: function() {
-    //注册copy事件与图片放大
     let that = this;
     this.$refs["BlogBody"].addEventListener("click", function() {
       if (event.target.className === "fa fa-clipboard") {
-        // console.log(event.target.parentNode.nextElementSibling.innerText.replace(/\n\n/g,'\n'))
         let textNode = event.target.parentNode.nextElementSibling; //获取要选中的内容
         that.copyNodeText(textNode);
       }
-      // if (event.target.tagName === "IMG") {  //放大图片，感觉暂时用不着
-      //   console.log("放大");
-      //   let src = event.target.src;
-      //   let div = document.createElement("div");
-      //   div.style.cssText =
-      //     "position:fixed;top:0;right:0;bottom:0;left:0;z-index:1001;display:flex;justify-content:center;align-items:center;background:#22222290";
-      //   div.innerHTML = `<img src=${src}></img>`;
-      //   document.body.appendChild(div);
-      //   div.onclick = function() {
-      //     document.body.removeChild(div);
-      //   };
-      // }
     });
     //绑定滑动事件
     this.$refs["BlogDirectory"].addEventListener("click", function() {

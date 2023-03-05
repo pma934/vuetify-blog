@@ -7,11 +7,11 @@ export default new Vuex.Store({
   state: {
     codePen: {},
     blog: [],
-    per5Pages: 1, //5分页 总页数
+    per5Pages: 1,
     labels:[],
   },
   getters: {
-    per100Pages: state => { //100分页 总页数
+    per100Pages: state => { 
       return Math.ceil(state.per5Pages / 20)
     }
   },
@@ -20,7 +20,6 @@ export default new Vuex.Store({
       state.per5Pages = n
     },
     setBlog(state, [list, page]) {
-      // console.log(page)
       if (page == 1) {
         state.blog = list
       } else {

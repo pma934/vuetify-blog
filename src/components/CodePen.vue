@@ -1,6 +1,5 @@
 <template>
   <div v-if="codePenItems.length">
-    <!-- <div>{{res}}</div> -->
     <div class="headline">{{title}}</div>
     <v-container grid-list-lg>
       <v-layout column>

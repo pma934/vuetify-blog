@@ -8,33 +8,27 @@ export default new Router({
   routes: [{
       path: '/',
       name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('./views/About.vue'), //  lazy-loaded
+      component: Home,
+      meta: { title: '首页' }
     },
     {
       path: '/hot',
       name: 'hot',
-      component: () => import('./views/Hot.vue')
+      component: () => import('./views/Hot.vue'),
+      meta: { title: '热门' }
 
-    },
-    {
-      path: '/theme',
-      name: 'theme',
-      component: () => import('./views/Theme.vue')
     },
     {
       path: '/archive',
       name: 'archive',
-      component: () => import('./views/Archive.vue')
+      component: () => import('./views/Archive.vue'),
+      meta: { title: '归档' }
     },
     {
       path: "/archive/:number",
       name: "blogContent",
-      component: () => import('./components/BlogContent.vue')
+      component: () => import('./components/BlogContent.vue'),
+      meta: { title: '文章加载中···' }
     }
   ],
   scrollBehavior (to, from, savedPosition) {
